@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>To-Do List</h1>
+
+<form method="POST" action="{{ url_for('add_task') }}">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" name="content" placeholder="Enter new task">
+        <button class="btn btn-primary" type="submit">Add</button>
+    </div>
+</form>
+
+<ul class="list-group">
+    {% for task in tasks %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        {% if task.completed %}
+            <s>{{ task.content }}</s>
+        {% else %}
+            {{ task.content }}
+        {% endif %}
+        <div>
+            <a href="{{ url_for('update_task', task_id=task.id) }}" class="btn btn-sm btn-success">Toggle</a>
+            <a href="{{ url_for('delete_task', task_id=task.id) }}" class="btn btn-sm btn-danger">Delete</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
